@@ -1,6 +1,7 @@
-from db import db
+from src.db import db
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from src.init_data import Temperature
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:toor@db/api'
@@ -12,3 +13,4 @@ db.init_app(app)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
+    a = Temperature()
