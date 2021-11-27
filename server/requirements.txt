@@ -1,0 +1,10 @@
+Flask
+
+pymysql
+SQLAlchemy
+Flask-SQLAlchemy
+
+flask-cors
+
+Flask-Migrate
+flask-unittest
