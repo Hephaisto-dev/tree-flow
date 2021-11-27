@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-EXPOSE 3333
+EXPOSE 3000
 
 CMD /bin/bash -c 'npm install --no-cache; npm start'
 #CMD npm start
