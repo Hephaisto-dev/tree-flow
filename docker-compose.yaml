@@ -39,3 +39,11 @@ services:
       - 2000:80
     volumes:
       - /sessions
+  
+  jupyter:
+    build: jupyter/
+    container_name: jupyter-apple
+    ports:
+      - "8888:8888"
+    volumes:
+      - "./jupyter/:/work"
