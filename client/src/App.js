@@ -1,6 +1,7 @@
 import './App.css';
 
 import {useForm} from "react-hook-form"
+import {useState} from 'react';
 
 import {
     Button,
@@ -9,16 +10,27 @@ import {
     FormHelperText,
     FormLabel,
     Input,
+    ListItem,
     Menu,
     MenuButton,
     MenuDivider,
     MenuItemOption,
     MenuList,
-  MenuOptionGroup,
-    Select
+    MenuOptionGroup,
+    OrderedList,
+    Select,
+    Table,
+    TableCaption,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
 } from "@chakra-ui/react"
 
-import { DatePicker } from '@orange_digital/chakra-datepicker';
+import {DatePicker} from '@orange_digital/chakra-datepicker';
+
+const SERVER = "http://127.0.0.1:5000"
 
 
 const NavBar = () => {
@@ -44,59 +56,105 @@ const NavBar = () => {
 }
 
 const PredicateForm = () => {
-
+    const [data, setData] = useState({hits: []});
     const {handleSubmit, register, formState: {errors}} = useForm();
-    const onSubmit = values => console.log(values);
+    const onSubmit = values => {
+        console.log(values);
+        if (values.temperature == 10)
+            fetch(SERVER + '/research1')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setData({hits: data})
+                })
+                .catch(console.error);
+        else {
+            fetch(SERVER + '/research2')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setData({hits: data})
+                })
+                .catch(console.error);
+        }
+        console.error("error");
+    }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl id="temperature">
-          <FormLabel>Temperature</FormLabel>
-           <FormHelperText>The temperature</FormHelperText>
-                <Input type="text" {...register("temperature", {required: true})}/>
+        <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <FormControl id="temperature">
+                    <FormLabel>Température</FormLabel>
+                    <FormHelperText>Choisir la température</FormHelperText>
+                    <Input type="text" {...register("temperature", {required: true})}/>
 
-        </FormControl>
-        <br/>
-        <FormControl id="humidity">
-                                <FormLabel>Humidity</FormLabel>
-        <FormHelperText>Select  the humidity level</FormHelperText>
-          <Select {...register("humidity")} placeholder="Select Humidity">
-            
-                  <option value="1">Low</option>
-                  <option value="2">Medium</option>
-                  <option value="3">Hight</option>
-                  <option value="4">Very higth</option>
-                </Select>
-        </FormControl>
-<br/>
-        <FormControl id="luminosity">
-                                <FormLabel>Luminosity</FormLabel>
-        <FormHelperText>Select the luminosity level</FormHelperText>
-                <Select {...register("luminosity")} placeholder="Select luminosity">
-                  <option value="1">Low</option>
-                  <option value="2">Medium</option>
-                  <option value="3">Hight</option>
-                  <option value="4">Very higth</option>
-                </Select>
-        </FormControl>
+                </FormControl>
+                <br/>
+                <FormControl id="humidity">
+                    <FormLabel>Humidité</FormLabel>
+                    <FormHelperText>Choisir le niveau d'humidité</FormHelperText>
+                    <Select {...register("humidity")} placeholder="Niveau d'humidité">
 
-        <br />
-        <FormControl id="Date">
-                                <FormLabel>Date</FormLabel>
-        <FormHelperText>Date to start </FormHelperText>
-                 <DatePicker initialValue={new Date()} />
-        </FormControl>
-           
+                        <option value="1">Sec</option>
+                        <option value="2">Peu humide</option>
+                        <option value="3">Humide</option>
+                        <option value="4">Très humide</option>
+                    </Select>
+                </FormControl>
+                <br/>
+                <FormControl id="luminosity">
+                    <FormLabel>Luminosité</FormLabel>
+                    <FormHelperText>Choisir le niveau de luminosité</FormHelperText>
+                    <Select {...register("luminosity")} placeholder="Niveau de luminosité">
+                        <option value="1">Pas de lumière</option>
+                        <option value="2">Un peu de lumière</option>
+                        <option value="3">Lumineux</option>
+                        <option value="4">Très lumineux</option>
+                    </Select>
+                </FormControl>
 
-            <Button
-                mt={4}
-                colorScheme="teal"
-                type="submit"
-            >
-                Submit
-            </Button>
+                <br/>
+                <FormControl id="Date">
+                    <FormLabel>Date de plantation</FormLabel>
+                    <FormHelperText>Date de mise en terre</FormHelperText>
+                    <DatePicker initialValue={new Date()}/>
+                </FormControl>
 
-        </form>
+
+                <Button
+                    mt={4}
+                    colorScheme="teal"
+                    type="submit"
+                >
+                    Trouver les plantes compatible
+                </Button>
+          <br />
+          <br />
+          <br />
+           {data && data.hits?.length != 0 ?
+                <Table variant="simple">
+                    <TableCaption>Résultat de la recherche de plantes</TableCaption>
+                    <Thead>
+                        <Tr>
+                            <Th>Plantes disponibles</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {data.hits.map(item => (
+                            <Tr>
+                                <Td>{item}</Td>
+
+                            </Tr>
+
+                        ))}
+                    </Tbody>
+
+            </Table>
+             : <></>
+ }
+
+            </form>
+        </div>
 
     );
 
@@ -104,12 +162,11 @@ const PredicateForm = () => {
 
 function App() {
     return (
-      <div className="App" style={{
-        padding: 50,
-        textAlign: 'unset'
+        <div className="App" style={{
+            padding: 50,
+            textAlign: 'unset'
         }}>
             <ChakraProvider>
-                <NavBar/>
                 <PredicateForm/>
             </ChakraProvider>
         </div>
