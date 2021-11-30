@@ -1,23 +1,11 @@
-# PTS3 - Chatbot
+# Hackathon GottaGoHack - Winter 2021
 
-> Louis Guillet - Arthur Aladenise - Mathieu Lucas - Nicolas Fidel - Mathieu Chambon - Alexis Le Guennec
+> Nicolas Fidel - Hephaisto - Mayeul Kergall - Edouard Frc
 
 ## Liens:
 
-- ### Miro :
-  https://miro.com/app/board/o9J_ldWX4dY=/
-
-- ### Jira :
-  https://pts3.atlassian.net/jira/software/projects/PTS3/boards/1
-
-- ### Drive PTS3  :
-  https://drive.google.com/drive/folders/1V-SURYFJvSByarzSSqksPk6HOnvFoC3K?usp=sharing
-
-  - **Lien du cahier des charges :** 
-    https://drive.google.com/file/d/1C49cSCUHT_enyaclMj6LY14w7d4XEZNj/view?usp=sharing
-
-  - **Lien du cahier du support de soutenances :** 
-    https://docs.google.com/presentation/d/1kXmrjN9P9-b2NS84oisHjnJGfzHUTyH67FJSnvfzsCA/edit?usp=sharing
+- ### GottaGoHack :
+  https://www.gottagohack.fr/
 
 ## Architecture du projet
 
